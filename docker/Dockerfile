@@ -12,7 +12,7 @@ ENV OPENCLAW_GATEWAY_BIND=lan
 
 # Create OpenClaw directories
 USER root
-RUN mkdir -p /home/node/.openclaw/workspaces/main/skills && \
+RUN mkdir -p /home/node/.openclaw/workspaces/main && \
     chown -R node:node /home/node/.openclaw
 
 # Copy pre-configured files
