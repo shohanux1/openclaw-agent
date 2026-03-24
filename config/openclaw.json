@@ -28,17 +28,19 @@
         "identity": {
           "name": "Silo",
           "emoji": "🚀"
+        },
+        "mcp": {
+          "servers": [
+            {
+              "name": "silocrm",
+              "command": "node",
+              "args": ["/home/node/.openclaw/mcp-bridge.js"]
+            }
+          ]
         }
       }
     ]
   },
-  "mcpServers": [
-    {
-      "name": "silocrm",
-      "command": "node",
-      "args": ["/home/node/.openclaw/mcp-bridge.js"]
-    }
-  ],
   "skills": {
     "allowBundled": [],
     "entries": {}
