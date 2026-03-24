@@ -32,11 +32,16 @@
       }
     ]
   },
-  "mcpServers": {
-    "silocrm": {
-      "command": "node",
-      "args": ["/home/node/.openclaw/mcp-bridge.js"],
-      "transport": "stdio"
+  "commands": {
+    "mcp": true
+  },
+  "mcp": {
+    "servers": {
+      "silocrm": {
+        "command": "node",
+        "args": ["/home/node/.openclaw/mcp-bridge.js"],
+        "transport": "stdio"
+      }
     }
   },
   "skills": {
