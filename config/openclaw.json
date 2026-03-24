@@ -36,7 +36,7 @@
     "servers": {
       "silocrm": {
         "url": "${SILOCRM_API_URL}/api/mcp",
-        "transport": "http-sse",
+        "transport": "sse",
         "auth": {
           "type": "bearer",
           "token": "${SILOCRM_SERVICE_TOKEN}"
