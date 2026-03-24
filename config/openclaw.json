@@ -40,7 +40,11 @@
       "silocrm": {
         "command": "node",
         "args": ["/home/node/.openclaw/mcp-bridge.js"],
-        "transport": "stdio"
+        "transport": "stdio",
+        "env": {
+          "SILOCRM_API_URL": "${SILOCRM_API_URL}",
+          "SILOCRM_SERVICE_TOKEN": "${SILOCRM_SERVICE_TOKEN}"
+        }
       }
     }
   },
