@@ -57,7 +57,7 @@
       "token": "openclaw-provision-test-token"
     },
     "controlUi": {
-      "enabled": false,
+      "enabled": true,
       "allowedOrigins": ["*"],
       "dangerouslyDisableDeviceAuth": true
     }
