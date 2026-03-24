@@ -1,0 +1,14 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "docker/Dockerfile"
+
+[deploy]
+healthcheckPath = "/healthz"
+healthcheckTimeout = 120
+startCommand = "openclaw gateway run --allow-unconfigured --bind lan"
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+[[deploy.ports]]
+port = 18789
+protocol = "http"

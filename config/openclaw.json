@@ -1,0 +1,57 @@
+{
+  "models": {
+    "providers": {
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiKey": "${OPENAI_API_KEY}",
+        "models": [
+          {
+            "id": "gpt-4o-mini",
+            "name": "GPT-4o Mini",
+            "contextWindow": 128000
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "skipBootstrap": true,
+      "model": {
+        "primary": "openai/gpt-4o-mini"
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "workspace": "/home/node/.openclaw/workspaces/main",
+        "identity": {
+          "name": "Nova",
+          "emoji": "🤖"
+        }
+      }
+    ]
+  },
+  "skills": {
+    "allowBundled": [],
+    "entries": {}
+  },
+  "gateway": {
+    "port": 18789,
+    "bind": "lan",
+    "trustedProxies": ["0.0.0.0/0"],
+    "auth": {
+      "mode": "token",
+      "token": "openclaw-provision-test-token"
+    },
+    "controlUi": {
+      "enabled": false,
+      "allowedOrigins": ["http://127.0.0.1:5500"],
+      "dangerouslyDisableDeviceAuth": true
+    }
+  },
+  "session": {
+    "scope": "per-sender",
+    "dmScope": "per-peer"
+  }
+}

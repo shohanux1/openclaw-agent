@@ -1,0 +1,11 @@
+# AI Proxy Server
+FROM node:24-slim
+
+WORKDIR /app
+
+# Copy proxy server
+COPY proxy-server.js .
+
+EXPOSE 4000
+
+CMD ["node", "proxy-server.js"]

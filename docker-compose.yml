@@ -1,0 +1,17 @@
+services:
+  # OpenClaw instance (direct OpenAI connection)
+  openclaw-test:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "18789:18789"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - openclaw-network
+    restart: unless-stopped
+
+networks:
+  openclaw-network:
+    driver: bridge
