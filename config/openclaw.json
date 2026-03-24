@@ -32,12 +32,15 @@
       }
     ]
   },
-  "mcpServers": {
-    "silocrm": {
-      "type": "sse",
-      "url": "${SILOCRM_API_URL}/api/mcp",
-      "headers": {
-        "Authorization": "Bearer ${SILOCRM_SERVICE_TOKEN}"
+  "mcp": {
+    "servers": {
+      "silocrm": {
+        "url": "${SILOCRM_API_URL}/api/mcp",
+        "transport": "sse",
+        "auth": {
+          "type": "bearer",
+          "token": "${SILOCRM_SERVICE_TOKEN}"
+        }
       }
     }
   },
