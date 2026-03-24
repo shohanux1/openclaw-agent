@@ -58,7 +58,7 @@
     },
     "controlUi": {
       "enabled": false,
-      "allowedOrigins": ["http://127.0.0.1:5500"],
+      "allowedOrigins": ["*"],
       "dangerouslyDisableDeviceAuth": true
     }
   },
