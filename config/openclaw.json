@@ -32,18 +32,15 @@
       }
     ]
   },
-  "mcp": {
-    "servers": {
-      "silocrm": {
-        "url": "${SILOCRM_API_URL}/api/mcp",
-        "transport": "sse",
-        "auth": {
-          "type": "bearer",
-          "token": "${SILOCRM_SERVICE_TOKEN}"
-        }
+  "mcpServers": [
+    {
+      "name": "silocrm",
+      "url": "${SILOCRM_API_URL}/api/mcp",
+      "headers": {
+        "Authorization": "Bearer ${SILOCRM_SERVICE_TOKEN}"
       }
     }
-  },
+  ],
   "skills": {
     "allowBundled": [],
     "entries": {}
