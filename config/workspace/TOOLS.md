@@ -2,29 +2,39 @@
 
 ## MCP Server: silocrm
 
-CRM tools available via MCP connection.
+CRM tools available via MCP connection. All tools use underscore naming format.
 
 ### Lead Management
-- `silocrm.leads.count` - Count leads by date/status
-- `silocrm.leads.list` - List leads with filters
-- `silocrm.leads.get` - Get lead details
-- `silocrm.leads.search` - Search by name
+- `silocrm_leads_count` - Count leads by date range and status
+- `silocrm_leads_list` - List leads with filters (up to 50)
+- `silocrm_leads_get` - Get detailed lead information by ID
+- `silocrm_leads_search` - Search leads by first/last name
 
-### Contacts
-- `silocrm.contacts.conversations` - SMS/email/voice history
-- `silocrm.contacts.notes` - Contact notes
+### Contact Management
+- `silocrm_contacts_conversations` - Get conversation history (SMS, email, voice)
+- `silocrm_contacts_notes` - Get notes for a contact
 
-### Pipeline
-- `silocrm.pipeline.analytics` - Stage distribution
-- `silocrm.pipeline.stages` - Available stages
-- `silocrm.pipeline.leadsByStage` - Leads in stage
+### Pipeline Analytics
+- `silocrm_pipeline_analytics` - Get pipeline analytics with stage distribution
+- `silocrm_pipeline_stages` - List all available pipeline stages
+- `silocrm_pipeline_leadsByStage` - Get leads in a specific pipeline stage
 
-### Reports & KPIs
-- `silocrm.reports.performance` - Performance metrics
-- `silocrm.kpi.metrics` - CPL, CPA, deals
-- `silocrm.kpi.adSpend` - Ad spend data
-- `silocrm.kpi.phoneAnalytics` - Call analytics
+### Reports
+- `silocrm_reports_performance` - Generate performance metrics report
+- `silocrm_reports_objections` - Analyze objections from notes and calls
+
+### KPI Metrics
+- `silocrm_kpi_metrics` - Get KPI metrics (CPL, CPA, deals closed, best platform)
+- `silocrm_kpi_adSpend` - Get advertising spend data by platform
+- `silocrm_kpi_phoneAnalytics` - Get phone call analytics
+
+### Knowledge Base
+- `silocrm_knowledge_search` - Search knowledge base documents and CRM data
+
+### Automation
+- `silocrm_sequences_create` - Create follow-up message sequences
+- `silocrm_workflows_create` - Create automation workflows (saved as INACTIVE)
 
 ### Actions
-- `silocrm.tasks.createReminder` - Create reminders
-- `silocrm.appointments.book` - Book appointments
+- `silocrm_tasks_createReminder` - Create reminders and tasks
+- `silocrm_appointments_book` - Book appointments with contacts
