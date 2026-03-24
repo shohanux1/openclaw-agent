@@ -19,6 +19,9 @@ RUN mkdir -p /home/node/.openclaw/workspaces/main/skills && \
 COPY --chown=node:node config/openclaw.json /home/node/.openclaw/openclaw.json
 COPY --chown=node:node config/workspace/ /home/node/.openclaw/workspaces/main/
 
+# Copy MCP bridge script (stdio to HTTP proxy)
+COPY --chown=node:node mcp-bridge.js /home/node/.openclaw/mcp-bridge.js
+
 USER node
 
 # Expose the gateway port

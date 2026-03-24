@@ -35,10 +35,8 @@
   "mcpServers": [
     {
       "name": "silocrm",
-      "url": "${SILOCRM_API_URL}/api/mcp",
-      "headers": {
-        "Authorization": "Bearer ${SILOCRM_SERVICE_TOKEN}"
-      }
+      "command": "node",
+      "args": ["/home/node/.openclaw/mcp-bridge.js"]
     }
   ],
   "skills": {
