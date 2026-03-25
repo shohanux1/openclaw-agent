@@ -58,7 +58,14 @@
     "trustedProxies": ["0.0.0.0/0"],
     "auth": {
       "mode": "token",
-      "token": "openclaw-provision-test-token"
+      "token": "${SILOCRM_SERVICE_TOKEN}"
+    },
+    "http": {
+      "endpoints": {
+        "chatCompletions": {
+          "enabled": true
+        }
+      }
     },
     "controlUi": {
       "enabled": true,
