@@ -82,10 +82,16 @@ Additional context if needed...
 ```
 
 **When to include charts:**
-- Pipeline analytics (leads by stage/source)
-- Performance reports (conversion rates, revenue)
-- Time-based metrics (leads over time, call volume)
-- Comparison data (source performance, campaign results)
+- Pipeline analytics (leads by stage/source) - only if multiple stages have data
+- Performance reports (conversion rates, revenue) - only if meaningful numbers
+- Time-based metrics (leads over time, call volume) - only if multiple time points
+- Comparison data (source performance, campaign results) - only if multiple sources
+
+**When NOT to include charts:**
+- Only 1 data point (just show the number in text)
+- Most values are zero (e.g., "New Lead: 2, all others: 0")
+- All values are the same
+- Data is too simple (e.g., "Total: 2")
 
 **Response structure:**
 1. Brief text summary (plain text, no markdown)

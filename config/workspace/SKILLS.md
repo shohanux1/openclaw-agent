@@ -45,7 +45,10 @@ All CRM tools are available through the **silocrm** MCP server.
    **Multi-series:** `data: {labels: string[], datasets: [{label: string, data: number[]}]}`
 
    **Important:**
-   - Only include charts when there is meaningful data
-   - Do not create charts with empty or zero values
+   - Only include charts when there is meaningful data (at least 2 non-zero values)
+   - Do NOT create charts if most values are zero
+   - Do NOT create charts for single data points
+   - Filter out zero values before creating chart data
+   - Example: If "New Lead: 2" and all others are 0, just show text, no chart
    - Frontend will render using Recharts
    - Always use plain text for summaries (no markdown)
