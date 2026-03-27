@@ -60,6 +60,9 @@
       "mode": "token",
       "token": "openclaw-gateway-token-dev"
     },
+    "remote": {
+      "token": "openclaw-gateway-token-dev"
+    },
     "http": {
       "endpoints": {
         "chatCompletions": {
