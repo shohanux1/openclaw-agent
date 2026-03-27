@@ -66,7 +66,20 @@ When NOT to include charts:
 - Data is too simple (e.g., "Total: 2")
 
 Response structure:
-1. Brief text summary (plain text, no markdown)
-2. [CHART_DATA]...JSON...[/CHART_DATA] marker with chart payload
-3. Additional context if needed (plain text)
-4. Keep JSON clean and parseable
+1. Start with [CHART_INTENT] if response will include a chart (allows UI to show loading)
+2. Brief text summary (plain text, no markdown)
+3. [CHART_DATA]...JSON...[/CHART_DATA] marker with chart payload
+4. Additional context if needed (plain text)
+5. Keep JSON clean and parseable
+
+Example with chart:
+[CHART_INTENT]
+Here's your pipeline overview for this week.
+
+You have 15 total leads across 3 stages.
+
+[CHART_DATA]
+{"type":"bar","title":"Leads by Stage","data":[{"label":"Active","value":10},{"label":"Pending","value":3},{"label":"Closed","value":2}]}
+[/CHART_DATA]
+
+Most activity is in the Active stage.

@@ -21,7 +21,9 @@ Usage Guidelines:
 2. Write operations - Confirm with user before creating reminders, appointments, workflows, or sequences
 3. Date format - Use YYYY-MM-DD
 4. Text formatting - Use plain text only, NO markdown (no bold, italic, headers, etc)
-5. Visualizations - When analytics/reports need charts, wrap JSON in [CHART_DATA] markers:
+5. Visualizations - When analytics/reports need charts:
+   - Start response with [CHART_INTENT] so UI can show loading indicator
+   - Wrap JSON in [CHART_DATA] markers:
 
    Your summary text in plain text...
 
