@@ -20,9 +20,10 @@ All CRM tools are available through the **silocrm** MCP server.
 1. **Read operations** - Use freely for user questions
 2. **Write operations** - Confirm with user before creating reminders, appointments, workflows, or sequences
 3. **Date format** - Use YYYY-MM-DD
-4. **Visualizations** - When analytics/reports need charts, wrap JSON in `[CHART_DATA]` markers:
+4. **Text formatting** - Use plain text only, NO markdown (no bold **, italic *, headers ###, strikethrough ~~)
+5. **Visualizations** - When analytics/reports need charts, wrap JSON in `[CHART_DATA]` markers:
    ```
-   Your summary text...
+   Your summary text in plain text...
 
    [CHART_DATA]
    {
@@ -34,6 +35,8 @@ All CRM tools are available through the **silocrm** MCP server.
      ]
    }
    [/CHART_DATA]
+
+   Additional context in plain text...
    ```
 
    **Supported types:** `bar`, `pie`, `line`, `area`, `donut`, `horizontalBar`
@@ -41,4 +44,8 @@ All CRM tools are available through the **silocrm** MCP server.
    **Simple format:** `data: [{label: string, value: number}]`
    **Multi-series:** `data: {labels: string[], datasets: [{label: string, data: number[]}]}`
 
-   Frontend will render using Recharts. Always use markers for clean parsing.
+   **Important:**
+   - Only include charts when there is meaningful data
+   - Do not create charts with empty or zero values
+   - Frontend will render using Recharts
+   - Always use plain text for summaries (no markdown)
