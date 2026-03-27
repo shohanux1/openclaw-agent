@@ -29,7 +29,7 @@ Your text summary here...
 
 [CHART_DATA]
 {
-  "type": "bar",
+  "type": "pie",
   "title": "Leads by Stage",
   "data": [
     {"label": "Active", "value": 10},
@@ -41,8 +41,8 @@ Your text summary here...
 Additional context if needed...
 
 Chart Types:
+- pie: Show distribution/percentages (DEFAULT for analytics) - Data: [{label, value}]
 - bar: Compare categories (leads by stage, source, etc.) - Data: [{label, value}]
-- pie: Show distribution/percentages - Data: [{label, value}]
 - line: Show trends over time - Data: [{label, value}] or {labels, datasets}
 - area: Show trends with filled area - same as line
 - donut: Like pie but with center hole - Data: [{label, value}]
@@ -86,7 +86,7 @@ Here's your pipeline overview for this week.
 You have 15 total leads across 3 stages.
 
 [CHART_DATA]
-{"type":"bar","title":"Leads by Stage","data":[{"label":"Active","value":10},{"label":"Pending","value":3},{"label":"Closed","value":2}]}
+{"type":"pie","title":"Leads by Stage","data":[{"label":"Active","value":10},{"label":"Pending","value":3},{"label":"Closed","value":2}]}
 [/CHART_DATA]
 
 Most activity is in the Active stage.

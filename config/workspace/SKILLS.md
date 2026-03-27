@@ -29,7 +29,7 @@ Usage Guidelines:
 
    [CHART_DATA]
    {
-     "type": "bar",
+     "type": "pie",
      "title": "Chart Title",
      "data": [
        {"label": "Active", "value": 10},
@@ -40,7 +40,7 @@ Usage Guidelines:
 
    Additional context in plain text...
 
-   Supported types: bar, pie, line, area, donut, horizontalBar
+   Supported types: pie (default), bar, line, area, donut, horizontalBar
 
    Simple format: data: [{label: string, value: number}]
    Multi-series: data: {labels: string[], datasets: [{label: string, data: number[]}]}
