@@ -58,7 +58,7 @@
     "trustedProxies": ["0.0.0.0/0"],
     "auth": {
       "mode": "token",
-      "token": "${SILOCRM_SERVICE_TOKEN}"
+      "token": "openclaw-gateway-token-dev"
     },
     "http": {
       "endpoints": {
