@@ -58,10 +58,7 @@
     "trustedProxies": ["0.0.0.0/0"],
     "auth": {
       "mode": "token",
-      "token": "openclaw-gateway-token-dev"
-    },
-    "remote": {
-      "token": "openclaw-gateway-token-dev"
+      "token": "${SILOCRM_SERVICE_TOKEN}"
     },
     "http": {
       "endpoints": {
