@@ -4,9 +4,53 @@ All tools are pre-loaded. Do NOT call tools/list - use these definitions directl
 
 ---
 
+## Utility Tools
+
+### get_current_date
+Get the current date. **MUST be called FIRST** for any time-relative queries like "today", "this week", "this month", "yesterday", etc.
+
+**Parameters:** None
+
+**Returns:**
+- today: Current date (YYYY-MM-DD)
+- dayOfWeek: Current day name
+- weekStart: Monday of current week
+- weekEnd: Sunday of current week
+- monthStart: First day of current month
+- monthEnd: Last day of current month
+
+**CRITICAL:** Never guess or assume dates. Always call this tool first for time-relative queries.
+
+---
+
+## Analytics Tools (SiloCRM)
+
+### silocrm_pipeline_analytics
+Get pipeline analytics with stage metrics and chart data. **Use this for pipeline overviews, stage breakdowns, and revenue projections.**
+
+**Parameters:**
+- startDate (string, REQUIRED): Start date YYYY-MM-DD (get from get_current_date)
+- endDate (string, REQUIRED): End date YYYY-MM-DD (get from get_current_date)
+- includeProjections (boolean, optional): Include revenue projections
+
+**Returns:**
+- stageMetrics: Count and value per stage
+- summary: Total leads, pipeline value, avg deal size
+- projections: Revenue projections (if requested)
+- charts: Pre-formatted chart data for visualization
+
+**When to use:**
+- "Show me my pipeline" → Use this tool
+- "Pipeline overview" → Use this tool
+- "Leads by stage" → Use this tool
+- "Stage breakdown" → Use this tool
+- Any analytics/chart request about pipeline
+
+---
+
 ## Search Tools (Qdrant Vector Search)
 
-All data search and read operations use semantic search via Qdrant.
+Use semantic search for finding specific records by content/criteria.
 
 ### semantic_search
 Search CRM records using natural language (semantic similarity). Finds records with similar meaning even if exact words don't match.
@@ -97,14 +141,21 @@ Book an appointment with a contact.
 
 | User Request | Tool to Use |
 |-------------|-------------|
-| Find/search/show/list leads | semantic_search |
+| "today", "this week", "this month" | get_current_date FIRST |
+| Pipeline overview / analytics | silocrm_pipeline_analytics |
+| Stage breakdown / distribution | silocrm_pipeline_analytics |
+| Leads by stage (with chart) | silocrm_pipeline_analytics |
+| Revenue projections | silocrm_pipeline_analytics |
+| Find/search specific leads | semantic_search |
 | Get lead details | semantic_search |
-| Search contacts | semantic_search |
+| Search contacts by criteria | semantic_search |
 | Get conversation history | semantic_search |
 | Find notes or call transcripts | semantic_search |
-| Pipeline/stage queries | semantic_search |
-| Any count/analytics questions | semantic_search |
 | Create follow-up sequence | silocrm_sequences_create |
 | Create workflow/automation | silocrm_workflows_create |
 | Create reminder/task | silocrm_tasks_createReminder |
 | Book appointment | silocrm_appointments_book |
+
+**Key distinction:**
+- **silocrm_pipeline_analytics** = Aggregated data with charts (for overviews, summaries, distributions)
+- **semantic_search** = Individual records (for finding specific leads, contacts, messages)
