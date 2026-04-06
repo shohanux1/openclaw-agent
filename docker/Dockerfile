@@ -22,6 +22,9 @@ COPY --chown=node:node config/workspace/ /home/node/.openclaw/workspaces/main/
 # Copy MCP bridge script (stdio to HTTP proxy)
 COPY --chown=node:node mcp-bridge.js /home/node/.openclaw/mcp-bridge.js
 
+# Copy Qdrant MCP script (vector search)
+COPY --chown=node:node qdrant-mcp.js /home/node/.openclaw/qdrant-mcp.js
+
 USER node
 
 # Expose the gateway port

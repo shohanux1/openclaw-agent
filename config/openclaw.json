@@ -45,6 +45,17 @@
           "SILOCRM_API_URL": "${SILOCRM_API_URL}",
           "SILOCRM_SERVICE_TOKEN": "${SILOCRM_SERVICE_TOKEN}"
         }
+      },
+      "qdrant": {
+        "command": "node",
+        "args": ["/home/node/.openclaw/qdrant-mcp.js"],
+        "transport": "stdio",
+        "env": {
+          "QDRANT_URL": "${QDRANT_URL}",
+          "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+          "SILOCRM_API_URL": "${SILOCRM_API_URL}",
+          "SILOCRM_SERVICE_TOKEN": "${SILOCRM_SERVICE_TOKEN}"
+        }
       }
     }
   },
