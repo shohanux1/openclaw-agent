@@ -53,30 +53,37 @@ Get pipeline analytics with stage metrics and chart data. **Use this for pipelin
 Use semantic search for finding specific records by content/criteria.
 
 ### semantic_search
-Search CRM records using natural language (semantic similarity). Finds records with similar meaning even if exact words don't match.
+Search CRM records using natural language with optional exact filters.
 
 **Parameters:**
-- query (string, REQUIRED): Natural language search query
+- query (string, REQUIRED): Natural language search query (for semantic similarity)
 - limit (number, optional): Max results 1-20, default 10
 - types (array, optional): Filter by record type: ["lead", "note", "message", "call"]
+- filters (object, optional): Exact field filters for precise matching
+  - status: Exact status match (e.g., "New Lead", "Contacted", "Won")
+  - stage: Exact pipeline stage match
+  - email: Exact email match
+  - name: Exact name match
+  - pipeline: Exact pipeline name match
+  - source: Exact lead source match
 
-**Use for ALL read/search operations:**
-- Finding leads by any criteria (status, interest, concerns, location, etc.)
-- Searching contacts and their information
-- Finding conversation history and messages
-- Searching notes and call transcripts
-- Pipeline and stage queries
-- Any query about existing CRM data
+**When to use filters:**
+- Use `query` alone for semantic/conceptual searches ("leads interested in solar")
+- Add `filters` when you need EXACT field matches
 
 **Examples:**
-- "Find leads who mentioned budget concerns"
-- "Contacts interested in solar panels"
-- "Show me leads in Texas"
-- "Notes about installation timeline"
-- "Leads who haven't been contacted recently"
-- "Messages about pricing questions"
-- "Call transcripts mentioning financing"
-- "Leads in the appointment stage"
+Semantic only:
+- query: "leads who mentioned budget concerns"
+- query: "contacts interested in enterprise plans"
+
+Semantic + exact filters:
+- query: "budget concerns", filters: { status: "New Lead" }
+- query: "interested in solar", filters: { stage: "Appointment Set" }
+- query: "all leads", filters: { source: "Facebook" }
+
+Exact match only (use simple query with filters):
+- query: "lead", filters: { email: "john@example.com" }
+- query: "leads", filters: { status: "Won" }
 
 ---
 

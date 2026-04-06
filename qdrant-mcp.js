@@ -106,18 +106,41 @@ async function createEmbedding(text) {
 // QDRANT SEARCH
 // =============================================================================
 
-async function searchQdrant(vector, orgId, types, limit) {
+async function searchQdrant(vector, orgId, types, limit, filters) {
   const filter = {
     must: [
       { key: 'org_id', match: { value: orgId } }
     ]
   };
 
+  // Type filter (lead, note, message, call)
   if (types && types.length > 0) {
     filter.must.push({
       key: 'type',
       match: { any: types }
     });
+  }
+
+  // Exact field filters
+  if (filters) {
+    if (filters.status) {
+      filter.must.push({ key: 'status', match: { value: filters.status } });
+    }
+    if (filters.stage) {
+      filter.must.push({ key: 'stage', match: { value: filters.stage } });
+    }
+    if (filters.email) {
+      filter.must.push({ key: 'email', match: { value: filters.email } });
+    }
+    if (filters.name) {
+      filter.must.push({ key: 'name', match: { value: filters.name } });
+    }
+    if (filters.pipeline) {
+      filter.must.push({ key: 'pipeline', match: { value: filters.pipeline } });
+    }
+    if (filters.source) {
+      filter.must.push({ key: 'source', match: { value: filters.source } });
+    }
   }
 
   const response = await httpRequest(`${QDRANT_URL}/collections/${COLLECTION_NAME}/points/search`, {
@@ -155,7 +178,7 @@ async function countPoints(orgId) {
 // =============================================================================
 
 async function semanticSearch(args, orgId) {
-  const { query, limit = 10, types } = args;
+  const { query, limit = 10, types, filters } = args;
 
   if (!query) {
     return { error: 'Missing required parameter: query' };
@@ -174,8 +197,8 @@ async function semanticSearch(args, orgId) {
   // Create query embedding
   const queryVector = await createEmbedding(query);
 
-  // Search Qdrant
-  const results = await searchQdrant(queryVector, orgId, types, Math.min(limit, 20));
+  // Search Qdrant with optional exact filters
+  const results = await searchQdrant(queryVector, orgId, types, Math.min(limit, 20), filters);
 
   return {
     results: results.map(r => ({
@@ -186,13 +209,17 @@ async function semanticSearch(args, orgId) {
       metadata: {
         name: r.payload.name,
         email: r.payload.email,
+        phone: r.payload.phone,
         status: r.payload.status,
         stage: r.payload.stage,
+        pipeline: r.payload.pipeline,
+        source: r.payload.source,
         contact_name: r.payload.contact_name
       }
     })),
     count: results.length,
-    query: query
+    query: query,
+    filters: filters || null
   };
 }
 
@@ -203,13 +230,13 @@ async function semanticSearch(args, orgId) {
 const TOOLS = [
   {
     name: 'semantic_search',
-    description: 'Search CRM records using natural language. Use for conceptual queries like "leads interested in solar", "contacts with budget concerns", "who mentioned financing". Data is indexed by SiloCRM.',
+    description: 'Search CRM records using natural language with optional exact filters. Use query for semantic matching, add filters for exact field matches.',
     inputSchema: {
       type: 'object',
       properties: {
         query: {
           type: 'string',
-          description: 'Natural language search query'
+          description: 'Natural language search query (for semantic similarity)'
         },
         limit: {
           type: 'number',
@@ -219,6 +246,18 @@ const TOOLS = [
           type: 'array',
           items: { type: 'string', enum: ['lead', 'note', 'message', 'call'] },
           description: 'Filter by record type'
+        },
+        filters: {
+          type: 'object',
+          description: 'Exact field filters (optional). Use for precise matching.',
+          properties: {
+            status: { type: 'string', description: 'Exact status match (e.g., "New Lead", "Contacted", "Won")' },
+            stage: { type: 'string', description: 'Exact pipeline stage match' },
+            email: { type: 'string', description: 'Exact email match' },
+            name: { type: 'string', description: 'Exact name match' },
+            pipeline: { type: 'string', description: 'Exact pipeline name match' },
+            source: { type: 'string', description: 'Exact lead source match' }
+          }
         }
       },
       required: ['query']
