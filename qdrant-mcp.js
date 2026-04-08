@@ -25,6 +25,7 @@ const SILOCRM_ORG_ID = process.env.SILOCRM_ORG_ID;
 // Constants
 const COLLECTION_NAME = 'crm_records';
 const EMBEDDING_MODEL = 'text-embedding-3-small';
+const MIN_SCORE_THRESHOLD = 0.75; // Only return results with 75%+ similarity (exact/highly relevant matches)
 
 // Validate environment
 if (!QDRANT_URL || !OPENAI_API_KEY) {
@@ -157,7 +158,8 @@ async function searchQdrant(vector, orgId, types, limit, filters) {
     vector: vector,
     filter: filter,
     limit: limit || 10,
-    with_payload: true
+    with_payload: true,
+    score_threshold: MIN_SCORE_THRESHOLD
   });
 
   return response.result || [];
