@@ -7,6 +7,7 @@
  *
  * Environment variables:
  * - QDRANT_URL: Qdrant server URL
+ * - QDRANT_API_KEY: Qdrant API key for authentication (optional)
  * - OPENAI_API_KEY: For query embeddings
  * - SILOCRM_ORG_ID: Organization ID for filtering
  */
@@ -17,6 +18,7 @@ const http = require('http');
 
 // Environment variables
 const QDRANT_URL = process.env.QDRANT_URL;
+const QDRANT_API_KEY = process.env.QDRANT_API_KEY;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const SILOCRM_ORG_ID = process.env.SILOCRM_ORG_ID;
 
@@ -143,9 +145,14 @@ async function searchQdrant(vector, orgId, types, limit, filters) {
     }
   }
 
+  const headers = { 'Content-Type': 'application/json' };
+  if (QDRANT_API_KEY) {
+    headers['api-key'] = QDRANT_API_KEY;
+  }
+
   const response = await httpRequest(`${QDRANT_URL}/collections/${COLLECTION_NAME}/points/search`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
+    headers: headers
   }, {
     vector: vector,
     filter: filter,
@@ -158,9 +165,14 @@ async function searchQdrant(vector, orgId, types, limit, filters) {
 
 async function countPoints(orgId) {
   try {
+    const headers = { 'Content-Type': 'application/json' };
+    if (QDRANT_API_KEY) {
+      headers['api-key'] = QDRANT_API_KEY;
+    }
+
     const response = await httpRequest(`${QDRANT_URL}/collections/${COLLECTION_NAME}/points/count`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
+      headers: headers
     }, {
       filter: {
         must: [{ key: 'org_id', match: { value: orgId } }]

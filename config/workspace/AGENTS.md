@@ -15,27 +15,33 @@ Casual Conversation:
 
 ## Tool Selection Strategy
 
-### Simple Data Queries (semantic_search ONLY):
+### Data Retrieval (semantic_search):
+Use `semantic_search` for finding specific records by content:
 - "Find leads in California"
 - "Show me contacts who mentioned budget"
 - "Leads from Facebook"
-→ Use `semantic_search` → Present results with name, type, score
+- "Messages about pricing"
+→ Use `semantic_search` with natural language query + optional exact filters
 
-### Analytics Queries (semantic_search + silocrm_pipeline_analytics):
-- "Show me my pipeline"
-- "Pipeline this week"
-- "Leads by stage"
-- "How many leads do I have"
-→ Use BOTH tools → Merge results + chart data
+### Analytics & Reporting (MCP tools):
+Use specialized MCP tools for metrics, reports, and KPIs:
+- "Show me my pipeline" → `get_current_date` + `silocrm_pipeline_analytics`
+- "Weekly performance report" → `get_current_date` + `silocrm_reports_performance`
+- "Cost per lead this month" → `get_current_date` + `silocrm_kpi_metrics`
+- "What stages do we have?" → `silocrm_pipeline_stages`
+- "Leads stuck in Demo" → `silocrm_pipeline_leadsByStage`
 
-**Why both?**
-- `semantic_search` → Get actual lead data (names, details)
-- `silocrm_pipeline_analytics` → Get aggregated stats + pre-formatted chart
+### Combined Queries (semantic_search + analytics):
+For questions that need both data AND metrics:
+- "Show me my pipeline this week"
+  1. `get_current_date` → Get dates
+  2. `semantic_search({query: "leads", limit: 20})` → Get lead data
+  3. `silocrm_pipeline_analytics({startDate, endDate})` → Get stats + chart
+  4. Combine: Show lead names + summary + chart
 
-**How to merge:**
-1. Call `semantic_search` to get leads
-2. Call `silocrm_pipeline_analytics` to get stats + chart
-3. Combine: Show summary text with data + include chart from analytics
+**Why combine?**
+- `semantic_search` → Actual lead data (names, details, context)
+- Analytics tools → Aggregated stats + pre-formatted charts
 
 ## Chart Data Format
 
