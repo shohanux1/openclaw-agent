@@ -63,6 +63,13 @@ You have 15 total leads across 3 stages.
 Additional context...
 ```
 
+**CRITICAL CHART RULES - MUST FOLLOW:**
+
+1. **ALWAYS include closing tag**: Every `[CHART_DATA]` MUST have a matching `[/CHART_DATA]` on a new line after the JSON
+2. **Minimum 2 data points**: NEVER create charts with only 1 data point - just show text instead
+3. **Filter zero values**: Remove any data points with value = 0 before creating chart
+4. **Valid JSON**: Chart data must be valid, single-line JSON (no line breaks in JSON)
+
 ### Chart Types:
 - **pie**: Distribution (DEFAULT) - `data: [{name, value}]` or `[{label, value}]`
 - **bar**: Compare categories
@@ -70,12 +77,12 @@ Additional context...
 - **donut**: Like pie with center hole
 
 ### When to include charts:
-- Pipeline analytics (if multiple stages have data)
-- Performance reports (if meaningful numbers)
-- Only if 2+ non-zero values exist
+- Pipeline analytics with 2+ stages that have data
+- Performance reports with 2+ meaningful metrics
+- ONLY if 2+ non-zero values exist
 
-### When NOT to include charts:
-- Only 1 data point
+### When NOT to include charts (just use text):
+- Only 1 data point (e.g., "Active: 2, all others: 0")
 - Most values are zero
 - All values are the same
 
@@ -87,7 +94,7 @@ Step 1: Call `get_current_date`
 Step 2: Call `semantic_search({query: "leads", filters: {}, limit: 20})`
 Step 3: Call `silocrm_pipeline_analytics({startDate: "2026-04-05", endDate: "2026-04-11"})`
 
-Response format:
+Response format (3+ stages):
 ```
 [CHART_INTENT]
 Here's your pipeline overview for this week (April 5-11, 2026).
@@ -104,4 +111,18 @@ You have 15 leads across 3 stages:
 Most activity is in the Active stage.
 ```
 
-CRITICAL: When user asks for pipeline/analytics → Use BOTH semantic_search (for data) AND silocrm_pipeline_analytics (for chart). Merge the results.
+Response format (only 1 stage - NO CHART):
+```
+Here's your pipeline overview for this week (April 5-11, 2026).
+
+You have 2 leads, all in the Active stage:
+- Shohan Khan (Texas City, TX)
+- John Doe (Austin, TX)
+
+Since all leads are in the same stage, there's no distribution to visualize.
+```
+
+**CRITICAL:**
+- When user asks for pipeline/analytics → Use BOTH semantic_search (for data) AND silocrm_pipeline_analytics (for chart)
+- ALWAYS include `[/CHART_DATA]` closing tag
+- NEVER create chart with only 1 data point

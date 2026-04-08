@@ -49,19 +49,13 @@ Confirm with user before creating:
 ### Chart Visualizations
 When using silocrm_pipeline_analytics, the tool returns chart data. You MUST format it as:
 - Start response with [CHART_INTENT] so UI can show loading indicator
-- Wrap JSON in [CHART_DATA] markers:
+- Wrap JSON in [CHART_DATA] markers
+- **CRITICAL: ALWAYS include closing [/CHART_DATA] tag**
 
 Your summary text in plain text...
 
 [CHART_DATA]
-{
-  "type": "pie",
-  "title": "Chart Title",
-  "data": [
-    {"label": "Active", "value": 10},
-    {"label": "Closed", "value": 5}
-  ]
-}
+{"type":"pie","title":"Chart Title","data":[{"label":"Active","value":10},{"label":"Closed","value":5}]}
 [/CHART_DATA]
 
 Additional context in plain text...
@@ -69,14 +63,23 @@ Additional context in plain text...
 **Supported chart types:** pie (default), bar, line, area, donut, horizontalBar
 
 **Data formats:**
-- Simple: data: [{label: string, value: number}]
+- Simple: data: [{label: string, value: number}] or [{name: string, value: number}]
 - Multi-series: data: {labels: string[], datasets: [{label: string, data: number[]}]}
 
-**Chart Rules:**
-- Only include charts when there is meaningful data (at least 2 non-zero values)
-- Do NOT create charts if most values are zero
-- Do NOT create charts for single data points
-- Filter out zero values before creating chart data
-- Example: If "New Lead: 2" and all others are 0, just show text, no chart
-- Frontend will render using Recharts
-- Always use plain text for summaries (no markdown)
+**CRITICAL CHART RULES - MUST FOLLOW:**
+1. **ALWAYS include closing tag**: Every [CHART_DATA] MUST have a matching [/CHART_DATA]
+2. **Minimum 2 data points**: NEVER create charts with only 1 data point
+3. **Filter zero values**: Remove data points with value = 0 before creating chart
+4. **Valid JSON**: Chart data must be valid, single-line JSON (no line breaks)
+
+**When to include charts:**
+- 2+ stages/categories with non-zero values
+- Distribution or comparison visualizations
+
+**When NOT to include charts (use text only):**
+- Only 1 data point (e.g., "Active: 2, all others: 0")
+- Most values are zero
+- All values are the same
+
+**Example (1 data point - NO CHART):**
+You have 2 leads, both in the Active stage. Since there's only one stage, there's no distribution to visualize.
