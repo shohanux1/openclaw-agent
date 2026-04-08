@@ -144,6 +144,30 @@ async function searchQdrant(vector, orgId, types, limit, filters) {
     if (filters.source) {
       filter.must.push({ key: 'source', match: { value: filters.source } });
     }
+    // Assignment filters
+    if (filters.assigned_to) {
+      filter.must.push({ key: 'assigned_to', match: { value: filters.assigned_to } });
+    }
+    if (filters.unassigned === true) {
+      filter.must.push({ key: 'assigned_to', match: { value: null } });
+    }
+    // Archive filter
+    if (filters.is_archived !== undefined) {
+      filter.must.push({ key: 'is_archived', match: { value: filters.is_archived } });
+    }
+    // Date range filters (created_at, updated_at)
+    if (filters.created_after) {
+      filter.must.push({ key: 'created_at', range: { gte: filters.created_after } });
+    }
+    if (filters.created_before) {
+      filter.must.push({ key: 'created_at', range: { lt: filters.created_before } });
+    }
+    if (filters.updated_after) {
+      filter.must.push({ key: 'updated_at', range: { gte: filters.updated_after } });
+    }
+    if (filters.last_contacted_before) {
+      filter.must.push({ key: 'last_contacted_at', range: { lt: filters.last_contacted_before } });
+    }
   }
 
   const headers = { 'Content-Type': 'application/json' };
@@ -263,14 +287,25 @@ const TOOLS = [
         },
         filters: {
           type: 'object',
-          description: 'Exact field filters (optional). Use for precise matching.',
+          description: 'Exact field filters (optional). Use for precise matching and time-based queries.',
           properties: {
+            // Basic filters
             status: { type: 'string', description: 'Exact status match (e.g., "New Lead", "Contacted", "Won")' },
             stage: { type: 'string', description: 'Exact pipeline stage match' },
             email: { type: 'string', description: 'Exact email match' },
             name: { type: 'string', description: 'Exact name match' },
             pipeline: { type: 'string', description: 'Exact pipeline name match' },
-            source: { type: 'string', description: 'Exact lead source match' }
+            source: { type: 'string', description: 'Exact lead source match' },
+            // Assignment filters
+            assigned_to: { type: 'string', description: 'Filter by assigned user ID' },
+            unassigned: { type: 'boolean', description: 'Filter for unassigned leads (true)' },
+            // Archive filter
+            is_archived: { type: 'boolean', description: 'Filter archived leads (true) or active (false)' },
+            // Date range filters (ISO 8601 format)
+            created_after: { type: 'string', description: 'Created after date (YYYY-MM-DD or ISO 8601)' },
+            created_before: { type: 'string', description: 'Created before date (YYYY-MM-DD or ISO 8601)' },
+            updated_after: { type: 'string', description: 'Updated after date (YYYY-MM-DD or ISO 8601)' },
+            last_contacted_before: { type: 'string', description: 'Last contacted before date (for follow-up queries)' }
           }
         }
       },
